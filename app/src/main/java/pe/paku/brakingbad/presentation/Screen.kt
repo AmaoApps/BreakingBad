@@ -1,5 +1,6 @@
 package pe.paku.brakingbad.presentation
 
+import androidx.navigation.NavDestination
 import pe.paku.brakingbad.common.Constants
 
 sealed class Screen(val route: String) {

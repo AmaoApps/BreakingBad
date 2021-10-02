@@ -3,10 +3,7 @@ package pe.paku.brakingbad.presentation.list_characters
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -24,8 +21,27 @@ fun ListCharacterScreen(
     viewModel: ListCharacterViewModel = hiltViewModel()
 ){
     val state = viewModel.state.value
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text(Constants.TiTLE_LIST_CHARACTERS)
+                }
+            )
+        },
+        content = {
+            bodyListCharacterScreen(navController = navController, state = state)
+        }
+    )
+
+
+
+}
+
+@Composable
+fun bodyListCharacterScreen(navController:NavController, state: ListCharacterState){
     Column(modifier = Modifier.fillMaxSize()) {
-        TopAppBar(title = { Text(text = Constants.TiTLE_LIST_CHARACTERS) }, backgroundColor = PurplePrimary )
+        //TopAppBar(title = { Text(text = Constants.TiTLE_LIST_CHARACTERS) }, backgroundColor = PurplePrimary )
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -61,6 +77,4 @@ fun ListCharacterScreen(
             }
         }
     }
-
-
 }
