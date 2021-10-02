@@ -13,6 +13,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import pe.paku.brakingbad.common.Constants
 import pe.paku.brakingbad.presentation.list_characters.components.ListItemCharacter
+import pe.paku.brakingbad.presentation.list_characters.components.ListItemCharacterv2
 import pe.paku.brakingbad.presentation.ui.theme.PurplePrimary
 
 @Composable
@@ -51,7 +52,7 @@ fun bodyListCharacterScreen(navController:NavController, state: ListCharacterSta
                 modifier = Modifier.fillMaxSize()
             ) {
                 items(state.characters){ character ->
-                    ListItemCharacter(character = character, onItemClick = {
+                    ListItemCharacterv2(character = character, onItemClick = {
                         println("Pulsaste al character con ruta -> " + Constants.PathScreen.DETAIL_CHARACTER_SCREEN + "/" + character.charId)
                         navController.navigate(route = Constants.PathScreen.DETAIL_CHARACTER_SCREEN + "/" + character.charId)
                     })
