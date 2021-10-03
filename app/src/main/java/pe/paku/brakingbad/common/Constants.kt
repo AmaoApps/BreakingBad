@@ -5,6 +5,7 @@ object Constants {
     const val BASE_URL : String = "https://www.breakingbadapi.com/api/"
     const val TiTLE_LIST_CHARACTERS = "Breaking Bad Characters"
     const val TiTLE_DETAIL_CHARACTERS = "Detail Character"
+    const val EMPTY_STRING = ""
 
     object PathScreen {
         const val DETAIL_CHARACTER_SCREEN = "detail_screen"
@@ -15,4 +16,8 @@ object Constants {
         }
 
     }
+
+    const val DETAIL_CHARACTER_OCCUPATION = "Occupation"
+    const val DETAIL_CHARACTER_STATUS = "Status"
+    const val DETAIL_CHARACTER_PORTRAYED = "Portrayed"
 }

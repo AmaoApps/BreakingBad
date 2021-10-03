@@ -7,12 +7,16 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import pe.paku.brakingbad.common.Constants
+import pe.paku.brakingbad.presentation.Greeting
 import pe.paku.brakingbad.presentation.detail_character.components.HeaderDetailCharacter
+import pe.paku.brakingbad.presentation.detail_character.components.ItemDetailCharacter
 import pe.paku.brakingbad.presentation.list_characters.bodyListCharacterScreen
+import pe.paku.brakingbad.presentation.ui.theme.BrakingbadTheme
 
 @Composable
 fun DetailCharacterScreen(
@@ -25,7 +29,7 @@ fun DetailCharacterScreen(
         topBar = {
             TopAppBar(
                 title = {
-                    Text(state.character?.let { it.name }?: Constants.TiTLE_DETAIL_CHARACTERS)
+                    Text(state.character?.let { it.nickname }?: Constants.TiTLE_DETAIL_CHARACTERS)
                 },
                 navigationIcon = {
                     IconButton(onClick = {
@@ -54,6 +58,20 @@ fun bodyDetailCharacterScreen(state: DetailCharacterState){
     {
         state.character?.let {
             HeaderDetailCharacter(characterDetail = it)
+            ItemDetailCharacter(
+                itemLabel = Constants.DETAIL_CHARACTER_OCCUPATION,
+                description = it.occupation
+            )
+            ItemDetailCharacter(
+                itemLabel = Constants.DETAIL_CHARACTER_STATUS,
+                description = listOf(it.status)
+            )
+            ItemDetailCharacter(
+                itemLabel = Constants.DETAIL_CHARACTER_PORTRAYED,
+                description = listOf(it.portrayed)
+            )
         }
     }
 }
+
+
