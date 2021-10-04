@@ -9,7 +9,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import dagger.hilt.android.AndroidEntryPoint
-import pe.paku.brakingbad.presentation.naigation.NavigationApp
+import pe.paku.brakingbad.presentation.navigation.NavigationApp
 import pe.paku.brakingbad.presentation.ui.theme.BrakingbadTheme
 
 @AndroidEntryPoint

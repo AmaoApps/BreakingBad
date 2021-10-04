@@ -3,10 +3,7 @@ package pe.paku.brakingbad.presentation.list_characters
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -16,6 +13,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import pe.paku.brakingbad.common.Constants
 import pe.paku.brakingbad.presentation.list_characters.components.ListItemCharacter
+import pe.paku.brakingbad.presentation.list_characters.components.ListItemCharacterv2
 import pe.paku.brakingbad.presentation.ui.theme.PurplePrimary
 
 @Composable
@@ -24,8 +22,27 @@ fun ListCharacterScreen(
     viewModel: ListCharacterViewModel = hiltViewModel()
 ){
     val state = viewModel.state.value
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text(Constants.TiTLE_LIST_CHARACTERS)
+                }
+            )
+        },
+        content = {
+            bodyListCharacterScreen(navController = navController, state = state, viewModel = viewModel)
+        }
+    )
+
+
+
+}
+
+@Composable
+fun bodyListCharacterScreen(navController:NavController, state: ListCharacterState, viewModel: ListCharacterViewModel){
     Column(modifier = Modifier.fillMaxSize()) {
-        TopAppBar(title = { Text(text = Constants.TiTLE_LIST_CHARACTERS) }, backgroundColor = PurplePrimary )
+        //TopAppBar(title = { Text(text = Constants.TiTLE_LIST_CHARACTERS) }, backgroundColor = PurplePrimary )
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -35,10 +52,14 @@ fun ListCharacterScreen(
                 modifier = Modifier.fillMaxSize()
             ) {
                 items(state.characters){ character ->
-                    ListItemCharacter(character = character, onItemClick = {
-                        println("Pulsaste al character con ruta -> " + Constants.PathScreen.DETAIL_CHARACTER_SCREEN + "/" + character.charId)
-                        navController.navigate(route = Constants.PathScreen.DETAIL_CHARACTER_SCREEN + "/" + character.charId)
-                    })
+                    ListItemCharacterv2(
+                        character = character,
+                        onItemClick = {
+                            println("Pulsaste al character con ruta -> " + Constants.PathScreen.DETAIL_CHARACTER_SCREEN + "/" + character.charId)
+                            navController.navigate(route = Constants.PathScreen.DETAIL_CHARACTER_SCREEN + "/" + character.charId)
+                        },
+                        viewModel =viewModel
+                    )
                 }
             }
             if(state.isLoading){
@@ -61,6 +82,4 @@ fun ListCharacterScreen(
             }
         }
     }
-
-
 }
