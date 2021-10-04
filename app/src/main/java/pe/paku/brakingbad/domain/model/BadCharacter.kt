@@ -7,7 +7,7 @@ data class BadCharacter(
     val name: String,
     val nickname: String,
     val img: String,
-    val isFavorite: Boolean
+    var isFavorite: Boolean
 
 )
 

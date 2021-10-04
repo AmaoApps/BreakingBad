@@ -31,7 +31,7 @@ fun ListCharacterScreen(
             )
         },
         content = {
-            bodyListCharacterScreen(navController = navController, state = state)
+            bodyListCharacterScreen(navController = navController, state = state, viewModel = viewModel)
         }
     )
 
@@ -40,7 +40,7 @@ fun ListCharacterScreen(
 }
 
 @Composable
-fun bodyListCharacterScreen(navController:NavController, state: ListCharacterState){
+fun bodyListCharacterScreen(navController:NavController, state: ListCharacterState, viewModel: ListCharacterViewModel){
     Column(modifier = Modifier.fillMaxSize()) {
         //TopAppBar(title = { Text(text = Constants.TiTLE_LIST_CHARACTERS) }, backgroundColor = PurplePrimary )
         Box(
@@ -52,10 +52,14 @@ fun bodyListCharacterScreen(navController:NavController, state: ListCharacterSta
                 modifier = Modifier.fillMaxSize()
             ) {
                 items(state.characters){ character ->
-                    ListItemCharacterv2(character = character, onItemClick = {
-                        println("Pulsaste al character con ruta -> " + Constants.PathScreen.DETAIL_CHARACTER_SCREEN + "/" + character.charId)
-                        navController.navigate(route = Constants.PathScreen.DETAIL_CHARACTER_SCREEN + "/" + character.charId)
-                    })
+                    ListItemCharacterv2(
+                        character = character,
+                        onItemClick = {
+                            println("Pulsaste al character con ruta -> " + Constants.PathScreen.DETAIL_CHARACTER_SCREEN + "/" + character.charId)
+                            navController.navigate(route = Constants.PathScreen.DETAIL_CHARACTER_SCREEN + "/" + character.charId)
+                        },
+                        viewModel =viewModel
+                    )
                 }
             }
             if(state.isLoading){

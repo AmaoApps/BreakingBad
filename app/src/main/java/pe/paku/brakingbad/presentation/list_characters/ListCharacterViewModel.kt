@@ -2,18 +2,22 @@ package pe.paku.brakingbad.presentation.list_characters
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import pe.paku.brakingbad.common.Resource
+import pe.paku.brakingbad.data.local.prefs.PrefsDataStore
 import pe.paku.brakingbad.domain.usecases.get_characters.GetCharactersUseCase
 import javax.inject.Inject
 
 @HiltViewModel
 class ListCharacterViewModel @Inject constructor(
-    private val getCharactersUseCase: GetCharactersUseCase
+    private val getCharactersUseCase: GetCharactersUseCase,
+    private val prefsDataStore: PrefsDataStore
 ) : ViewModel() {
 
     private val _state = mutableStateOf(ListCharacterState())
@@ -37,6 +41,13 @@ class ListCharacterViewModel @Inject constructor(
                 }
             }
         }.launchIn(viewModelScope)
+    }
+
+    fun saveFavorite(idCharacter : String, isFavorite:Boolean){
+        viewModelScope.launch {
+            prefsDataStore.setFavoriteCharacter(idCharacter = idCharacter, isFavorite)
+        }
+
     }
 
 }

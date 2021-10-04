@@ -1,5 +1,6 @@
 package pe.paku.brakingbad.presentation.list_characters.components
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -7,9 +8,12 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -22,14 +26,18 @@ import coil.compose.rememberImagePainter
 import coil.transform.CircleCropTransformation
 import pe.paku.brakingbad.R
 import pe.paku.brakingbad.domain.model.BadCharacter
+import pe.paku.brakingbad.presentation.list_characters.ListCharacterViewModel
 import pe.paku.brakingbad.presentation.ui.theme.PurplePrimary
-
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 
 @Composable
 fun ListItemCharacterv2(
     character: BadCharacter,
-    onItemClick: (BadCharacter) -> Unit
+    onItemClick: (BadCharacter) -> Unit,
+    viewModel: ListCharacterViewModel
 ){
+    val context  = LocalContext.current
     ConstraintLayout(
         modifier = Modifier
             .fillMaxWidth()
@@ -37,6 +45,7 @@ fun ListItemCharacterv2(
             .clickable { onItemClick(character) }
     ) {
         val (imgCharacter, infoCharacter, iconFavorite) = createRefs()
+        var isfavorite by remember { mutableStateOf(character.isFavorite) }
         Image(
             painter = rememberImagePainter(
                 data = character.img,
@@ -60,17 +69,25 @@ fun ListItemCharacterv2(
                     top.linkTo(parent.top)
                     end.linkTo(parent.end)
                     bottom.linkTo(parent.bottom)
-            },
+                },
             horizontalAlignment = Alignment.End,
             verticalArrangement = Arrangement.Center
         ) {
-            if (character.isFavorite)
+            if (isfavorite)
                 Image(
                     painter = painterResource(R.drawable.ic_heart),
                     contentDescription = character.name,
                     modifier = Modifier
                         .height(32.dp)
                         .width(32.dp)
+                        .clickable(
+                            onClick = {
+                                isfavorite = false
+                                viewModel.saveFavorite(character.charId.toString(), false)
+                            }
+                        )
+
+
                 ) else
                 Image(
                     painter = painterResource(R.drawable.ic_heart_unfill),
@@ -78,6 +95,13 @@ fun ListItemCharacterv2(
                     modifier = Modifier
                         .height(32.dp)
                         .width(32.dp)
+                        .clickable(
+                            onClick = {
+                                isfavorite = true
+                                viewModel.saveFavorite(character.charId.toString(), true)
+
+                            }
+                        )
                 )
         }
         Column(

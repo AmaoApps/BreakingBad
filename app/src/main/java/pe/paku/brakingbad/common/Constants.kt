@@ -17,6 +17,10 @@ object Constants {
 
     }
 
+    object Prefs {
+        const val DATA_STORAGE_NAME = "BB_DATA_STORAGE"
+    }
+
     const val DETAIL_CHARACTER_OCCUPATION = "Occupation"
     const val DETAIL_CHARACTER_STATUS = "Status"
     const val DETAIL_CHARACTER_PORTRAYED = "Portrayed"
