@@ -4,16 +4,20 @@ import android.app.Application
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import com.squareup.sqldelight.android.AndroidSqliteDriver
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import pe.paku.brakingbad.common.Constants
+import pe.paku.brakingbad.data.local.db.DatabaseRepository
 import pe.paku.brakingbad.data.local.prefs.PrefsDataStore
 import pe.paku.brakingbad.data.remote.BreakingBadApi
 import pe.paku.brakingbad.data.repository.BadCharacterRepositoryImpl
+import pe.paku.brakingbad.data.repository.DatabaseRepositoryImpl
 import pe.paku.brakingbad.data.repository.PrefsDataStoreImpl
+import pe.paku.brakingbad.db.DatabaseBreaking
 import pe.paku.brakingbad.domain.repository.BadCharacterRepository
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -43,6 +47,22 @@ object AppModule {
     @Singleton
     fun providesRepository(api: BreakingBadApi) : BadCharacterRepository {
         return BadCharacterRepositoryImpl(api)
+    }
+
+    @Provides
+    @Singleton
+    fun provideAndroidDriver(@ApplicationContext context: Context) : AndroidSqliteDriver {
+        return AndroidSqliteDriver(
+                schema = DatabaseBreaking.Schema,
+                context = context,
+                name = "BreakindBD.db"
+        )
+    }
+
+    @Provides
+    @Singleton
+    fun provideSQLDelight(driver: AndroidSqliteDriver) : DatabaseBreaking {
+        return DatabaseBreaking(driver)
     }
 
 }

@@ -6,6 +6,8 @@ plugins {
     id 'com.squareup.sqldelight'
 }
 
+def appPackageName = "pe.paku.brakingbad"
+
 android {
     compileSdk 31
 
@@ -47,6 +49,17 @@ android {
         resources {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
         }
+    }
+}
+
+sqldelight {
+    DatabaseBreaking {
+        packageName = "${appPackageName}.db"
+
+        sourceFolders = ["sqldelight"]
+
+        schemaOutputDirectory = file("src/main/sqldelight/schemas")
+        verifyMigrations = true
     }
 }
 

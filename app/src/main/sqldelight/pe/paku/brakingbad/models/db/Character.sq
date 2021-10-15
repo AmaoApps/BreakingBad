@@ -1,0 +1,7 @@
+CREATE TABLE Character (
+
+    characterId INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    nickName TEXT
+
+);
